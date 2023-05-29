@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/sinatra/sinatra.git
+  revision: 5f4dde19719505989905782a61a19c545df7f9f9
+  specs:
+    sinatra-contrib (3.0.6)
+      multi_json
+      mustermann (~> 3.0)
+      rack-protection (= 3.0.6)
+      sinatra (= 3.0.6)
+      tilt (~> 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -38,6 +49,7 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     minitest (5.18.0)
+    multi_json (1.15.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     nokogiri (1.15.2-arm64-darwin)
@@ -97,6 +109,7 @@ DEPENDENCIES
   erb_lint
   rubocop-fjord
   sinatra
+  sinatra-contrib!
   webrick
 
 BUNDLED WITH
