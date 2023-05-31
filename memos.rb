@@ -3,10 +3,11 @@ require 'sinatra/reloader'
 require 'json'
 
 before do
-  # JSONファイルからメモデータを読み込み
+  # JSONファイルからメモデータを読み込む。
   File.open("memos.json", "r") do |file|
-    hash = JSON.load(file)
-    @memos = hash["memos"]
+    # JSONのメモデータをキーがシンボルのハッシュに変更。
+    hash = JSON.load(file, nil, symbolize_names: true, create_additions: false)
+    @memos = hash[:memos]
   end
 end
 

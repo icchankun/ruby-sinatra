@@ -4,6 +4,6 @@
 </div>
 <ul>
   <% @memos.each.with_index(1) do |memo, index| %>
-    <li><a href="/memos/<%="#{index}"%>"><%= memo["title"] %></a></li>
+    <li><a href="/memos/<%="#{index}"%>"><%= memo[:title] %></a></li>
   <% end %>
 </ul>
