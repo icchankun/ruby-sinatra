@@ -3,7 +3,7 @@
   <button>追加</button>
 </div>
 <ul>
-  <% @memos.each do |memo| %>
-    <li><%= memo["title"] %></li>
+  <% @memos.each.with_index(1) do |memo, index| %>
+    <li><a href="/memos/<%="#{index}"%>"><%= memo["title"] %></a></li>
   <% end %>
 </ul>
