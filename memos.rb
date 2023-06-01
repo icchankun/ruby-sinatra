@@ -81,3 +81,14 @@ patch '/memos/:id' do
   # メモデータを編集後、そのメモの詳細画面に遷移。
   redirect "/memos/#{params[:id]}"
 end
+
+delete '/memos/:id' do
+  # インデックスからメモを特定し、そのメモを削除。
+  memo = @memos[index]
+  @memos.delete(memo)
+
+  write_to_file
+
+  # メモデータを削除後、メモ一覧画面に遷移。
+  redirect "/"
+end
