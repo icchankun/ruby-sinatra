@@ -20,6 +20,11 @@ helpers do
       JSON.dump(@hash, file)
     end
   end
+
+  # titleタグの中身を生成。
+  def title(page_title)
+    @title = page_title + " | " + "メモアプリ"
+  end
 end
 
 before do
@@ -32,12 +37,12 @@ before do
 end
 
 get '/' do
-  @title = "Top | メモアプリ"
+  title("Top")
   erb :index
 end
 
 get '/memos/new' do
-  @title = "New memo | メモアプリ"
+  title("New memo")
   erb :new
 end
 
@@ -59,7 +64,7 @@ get '/memos/:id' do
   # インデックスからメモを特定。
   @memo = @memos[index]
 
-  @title = "show memo | メモアプリ"
+  title("show memo")
   erb :show
 end
 
@@ -67,7 +72,7 @@ get '/memos/:id/edit' do
   # インデックスからメモを特定。
   @memo = @memos[index]
 
-  @title = "Edit memo | メモアプリ"
+  title("Edit memo")
   erb :edit
 end
 
