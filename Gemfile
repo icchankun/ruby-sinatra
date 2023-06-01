@@ -11,4 +11,5 @@ end
 group :development do
   gem 'rubocop-fjord', require: false
   gem 'erb_lint', require: false
+  gem "debug", ">= 1.0.0"
 end
