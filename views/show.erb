@@ -6,7 +6,7 @@
   <%== @memo[:body] %>
 </div>
 <div>
-  <a href="/memos/<%= params[:id] %>/edit">編集</a>
+  <a href="/memos/<%= params[:id] %>/edit">変更</a>
   <form method="post" action="/memos/<%= params[:id] %>">
     <input type="hidden" id="_method" name="_method" value="DELETE">
     <input type= "submit" value="削除">
