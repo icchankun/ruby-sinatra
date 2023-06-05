@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
@@ -16,33 +18,32 @@ helpers do
   # JSONファイルへメモデータを書き込む。
   def write_to_file
     @hash[:memos] = @memos
-    File.open("memos.json", "w") do |file|
+    File.open('memos.json', 'w') do |file|
       JSON.dump(@hash, file)
     end
   end
 
   # titleタグの中身を生成。
   def title(page_title)
-    @title = page_title + " | " + "メモアプリ"
+    @title = "#{page_title} | メモアプリ"
   end
 end
 
 before do
   # JSONファイルからメモデータを読み込む。
-  File.open("memos.json", "r") do |file|
-    # JSONのメモデータをキーがシンボルのハッシュに変更。
-    @hash = JSON.load(file, nil, symbolize_names: true, create_additions: false)
-    @memos = @hash[:memos]
-  end
+  file = File.read('memos.json')
+  # JSONのメモデータをキーがシンボルのハッシュに変更。
+  @hash = JSON.parse(file, symbolize_names: true)
+  @memos = @hash[:memos]
 end
 
 get '/' do
-  title("Top")
+  title('Top')
   erb :index
 end
 
 get '/memos/new' do
-  title("New memo")
+  title('New memo')
   erb :new
 end
 
@@ -50,7 +51,7 @@ post '/memos' do
   # フォームに入力されたメモデータを取得し、ハッシュとして格納.
   title = params[:title]
   body = params[:body]
-  memo = {title: "#{title}", body: "#{body}"}
+  memo = { title:, body: }
   @memos << memo
 
   write_to_file
@@ -64,7 +65,7 @@ get '/memos/:id' do
   # インデックスからメモを特定。
   @memo = @memos[index]
 
-  title("show memo")
+  title('show memo')
   erb :show
 end
 
@@ -72,7 +73,7 @@ get '/memos/:id/edit' do
   # インデックスからメモを特定。
   @memo = @memos[index]
 
-  title("Edit memo")
+  title('Edit memo')
   erb :edit
 end
 
@@ -95,5 +96,5 @@ delete '/memos/:id' do
   write_to_file
 
   # メモデータを削除後、メモ一覧画面に遷移。
-  redirect "/"
+  redirect '/'
 end
