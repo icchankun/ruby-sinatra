@@ -37,7 +37,7 @@ before do
   @memos = @hash[:memos]
 end
 
-get '/' do
+get '/memos' do
   title('Top')
   erb :index
 end
@@ -95,5 +95,5 @@ delete '/memos/:id' do
   write_to_file
 
   # メモデータを削除後、メモ一覧画面に遷移。
-  redirect '/'
+  redirect '/memos'
 end
