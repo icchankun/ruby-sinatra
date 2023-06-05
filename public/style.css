@@ -1,0 +1,66 @@
+/* 全体 */
+body {
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  margin: 0;
+}
+
+/* レイアウト */
+.container {
+  font-size: 1.25rem;
+  padding: 2rem;
+}
+
+.heading {
+  display: flex;
+  font-size: 2em;
+  margin-bottom: 1rem;
+}
+
+/* ボタン */
+.btn {
+  text-decoration: none;
+  color: black;
+  background-color: gray;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0 1rem;
+}
+
+.heading-btn {
+  margin-left: 1rem;
+}
+
+.input-btn {
+  display: inline-block;
+  font-size: 1em;
+  line-height: 1em;
+}
+
+/* リンク */
+.links {
+  display: flex;
+}
+
+.link:not(:last-child) {
+  margin-right: 1rem;
+}
+
+/* フォーム */
+.form {
+  text-align: center;
+}
+
+.memo-title, .memo-body {
+  margin-bottom: 1rem;
+}
+
+.memo-title-field, .memo-body-field {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1em;
+}
