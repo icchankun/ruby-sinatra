@@ -15,6 +15,14 @@ helpers do
     params[:id].to_i - 1
   end
 
+  def memo
+    # インデックスにより、メモを特定。
+    @memo = @memos[index]
+
+    # メモがなければ、Not Foundを戻す。
+    pass if !@memo
+  end
+
   # JSONファイルへメモデータを書き込む。
   def write_to_file
     @hash[:memos] = @memos
@@ -35,6 +43,11 @@ before do
   # JSONのメモデータをキーがシンボルのハッシュに変更。
   @hash = JSON.parse(file, symbolize_names: true)
   @memos = @hash[:memos]
+end
+
+# Not Foundの際に表示されるメッセージを設定。
+not_found do
+  'This is nowhere to be found.'
 end
 
 get '/memos' do
@@ -62,17 +75,13 @@ post '/memos' do
 end
 
 get '/memos/:id' do
-  # インデックスからメモを特定。
-  @memo = @memos[index]
-
+  memo
   title('show memo')
   erb :show
 end
 
 get '/memos/:id/edit' do
-  # インデックスからメモを特定。
-  @memo = @memos[index]
-
+  memo
   title('Edit memo')
   erb :edit
 end
