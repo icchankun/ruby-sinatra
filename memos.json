@@ -1,8 +1,1 @@
-{
-  "memos": [
-    {"title": "メモ1", "body": "メモ1の内容"},
-    {"title": "メモ2", "body": "メモ2の内容"},
-    {"title": "メモ3", "body": "メモ3の内容"},
-    {"title": "メモ4", "body": "メモ4の内容"}
-  ]
-}
+{"memos":[{"title":"メモ1","body":"メモ1の内容"},{"title":"<b>太字</b>","body":"<script>alert('アラート')</script>"}]}
