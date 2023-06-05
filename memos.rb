@@ -90,8 +90,7 @@ end
 
 delete '/memos/:id' do
   # インデックスからメモを特定し、そのメモを削除。
-  memo = @memos[index]
-  @memos.delete(memo)
+  @memos.delete_at(index)
 
   write_to_file
 
