@@ -4,11 +4,6 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
 
-configure do
-  # HTTPメソッドのPATCH/DELETEを使えるようにする。
-  enable :method_override
-end
-
 helpers do
   # 特定のメールデータのインデックスを取得。
   def index
