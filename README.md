@@ -17,7 +17,7 @@ $ bundle install
 
 4. アプリケーションを起動させてください。
 ```
-bundle exec ruby memos.rb -p 4567
+bundle exec ruby memos.rb
 ```
 
 5. 下記のURLにアクセスしてください。<br>
