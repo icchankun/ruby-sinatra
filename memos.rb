@@ -25,7 +25,7 @@ helpers do
 
   # タイトルタグの中身を生成。
   def title(page_title)
-    @title = "#{page_title} | メモアプリ"
+    "#{page_title} | メモアプリ"
   end
 end
 
@@ -35,12 +35,12 @@ end
 
 get '/memos' do
   @memos = fetch_memos
-  title('Top')
+  @page_title = 'Top'
   erb :index
 end
 
 get '/memos/new' do
-  title('New memo')
+  @page_title = 'New memo'
   erb :new
 end
 
@@ -57,14 +57,14 @@ end
 get '/memos/:id' do
   @memo = fetch_memos[index]
   pass if !@memo
-  title('show memo')
+  @page_title = 'show memo'
   erb :show
 end
 
 get '/memos/:id/edit' do
   @memo = fetch_memos[index]
   pass if !@memo
-  title('Edit memo')
+  @page_title = 'Edit memo'
   erb :edit
 end
 
