@@ -12,7 +12,7 @@ helpers do
 
   def fetch_memos
     stored_format_data = File.read('memos.json')
-    return [] if stored_format_data == ''
+    return [] if stored_format_data.empty?
 
     JSON.parse(stored_format_data, symbolize_names: true)[:memos]
   end
