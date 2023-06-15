@@ -11,7 +11,10 @@ helpers do
   end
 
   def fetch_memos
-    JSON.parse(File.read('memos.json'), symbolize_names: true)[:memos]
+    stored_format_data = File.read('memos.json')
+    return [] if stored_format_data == ''
+
+    JSON.parse(stored_format_data, symbolize_names: true)[:memos]
   end
 
   def write_to_file(memos)
