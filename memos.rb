@@ -64,6 +64,7 @@ end
 get '/memos/:id' do
   @memo = fetch_memos[index]
   pass if !@memo
+  pass if !@memo[:is_active]
   @page_title = 'show memo'
   erb :show
 end
@@ -71,6 +72,7 @@ end
 get '/memos/:id/edit' do
   @memo = fetch_memos[index]
   pass if !@memo
+  pass if !@memo[:is_active]
   @page_title = 'Edit memo'
   erb :edit
 end
