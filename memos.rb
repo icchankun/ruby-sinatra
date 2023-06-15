@@ -48,7 +48,7 @@ post '/memos' do
   memos = fetch_memos
   title = params[:title]
   body = params[:body]
-  memos << { title:, body: }
+  memos << { title:, body:, is_active: true }
   write_to_file(memos)
   id = memos.size
   redirect "/memos/#{id}"
@@ -78,7 +78,7 @@ end
 
 delete '/memos/:id' do
   memos = fetch_memos
-  memos.delete_at(index)
+  memos[index][:is_active] = false
   write_to_file(memos)
   redirect '/memos'
 end
