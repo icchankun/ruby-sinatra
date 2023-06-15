@@ -48,10 +48,17 @@ post '/memos' do
   memos = fetch_memos
   title = params[:title]
   body = params[:body]
-  memos << { title:, body:, is_active: true }
-  write_to_file(memos)
-  id = memos.size
-  redirect "/memos/#{id}"
+
+  if title.empty? || body.empty?
+    @error = 'メモタイトルまたはメモの内容が書かれていません。'
+    @page_title = 'New memo'
+    erb :new
+  else
+    memos << { title:, body:, is_active: true }
+    write_to_file(memos)
+    id = memos.size
+    redirect "/memos/#{id}"
+  end
 end
 
 get '/memos/:id' do
@@ -70,10 +77,20 @@ end
 
 patch '/memos/:id' do
   memos = fetch_memos
-  memos[index][:title] = params[:title]
-  memos[index][:body] = params[:body]
-  write_to_file(memos)
-  redirect "/memos/#{params[:id]}"
+  title = params[:title]
+  body = params[:body]
+
+  if title.empty? || body.empty?
+    @error = 'メモタイトルまたはメモの内容が書かれていません。'
+    @memo = fetch_memos[index]
+    @page_title = 'Edit memo'
+    erb :edit
+  else
+    memos[index][:title] = title
+    memos[index][:body] = body
+    write_to_file(memos)
+    redirect "/memos/#{params[:id]}"
+  end
 end
 
 delete '/memos/:id' do
