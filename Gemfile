@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'debug'
+gem 'debug', '>= 1.0.0'
 gem 'erb_lint', require: false
 gem 'rubocop', require: false
 gem 'rubocop-fjord', require: false

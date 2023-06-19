@@ -109,7 +109,7 @@ PLATFORMS
   arm64-darwin-22
 
 DEPENDENCIES
-  debug
+  debug (>= 1.0.0)
   erb_lint
   rubocop
   rubocop-fjord
