@@ -3,9 +3,7 @@
   <a class="btn heading-btn" href="/memos/new">追加</a>
 </div>
 <ul>
-  <% @memos.each.with_index(1) do |memo, index| %>
-    <% if memo[:is_active] %>
-      <li><a href="/memos/<%= "#{index}" %>"><%== memo[:title] %></a></li>
-    <% end %>
+  <% @memos.each do |memo| %>
+    <li><a href="/memos/<%= "#{memo[:id]}" %>"><%== memo[:title] %></a></li>
   <% end %>
 </ul>
