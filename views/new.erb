@@ -4,8 +4,8 @@
 <div class="error-message"><%= @error %></div>
 <div>
   <form class="form" method="post" action="/memos">
-    <input class="memo-title-field" type="text" name="title">
-    <textarea class="memo-body-field" name="body"></textarea>
+    <input class="memo-title-field" type="text" name="title" required="required">
+    <textarea class="memo-body-field" name="body" required="required"></textarea>
     <input class="btn input-btn" type="submit" value="保存">
   </form>
 </div>
