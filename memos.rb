@@ -5,7 +5,6 @@ require 'sinatra/reloader'
 require 'json'
 
 helpers do
-  # 特定のメモデータのインデックスを取得。
   def index
     params[:id].to_i - 1
   end
@@ -23,7 +22,6 @@ helpers do
     end
   end
 
-  # タイトルタグの中身を生成。
   def title(page_title)
     "#{page_title} | メモアプリ"
   end
