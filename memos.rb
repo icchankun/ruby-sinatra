@@ -7,10 +7,10 @@ require 'securerandom'
 
 helpers do
   def fetch_memos
-    stored_format_data = File.read('memos.json')
-    return [] if stored_format_data.empty?
+    json_data = File.read('memos.json')
+    return [] if json_data.empty?
 
-    JSON.parse(stored_format_data, symbolize_names: true)[:memos]
+    JSON.parse(json_data, symbolize_names: true)[:memos]
   end
 
   def find_memo
