@@ -1,7 +1,6 @@
 <div class="heading">
   <div class="heading-text">メモアプリ</div>
 </div>
-<div class="error-message"><%= @error %></div>
 <div>
   <form class="form" method="post" action="/memos/<%= params[:id] %>">
     <input type="hidden" name="_method" value="PATCH">
