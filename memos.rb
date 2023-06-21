@@ -13,8 +13,8 @@ helpers do
     JSON.parse(json_data, symbolize_names: true)[:memos]
   end
 
-  def find_memo
-    fetch_memos.find { |memo| memo[:id] == params[:id] }
+  def find_memo(id)
+    fetch_memos.find { |memo| memo[:id] == id }
   end
 
   def write_to_file(memos)
@@ -54,14 +54,14 @@ post '/memos' do
 end
 
 get '/memos/:id' do
-  @memo = find_memo
+  @memo = find_memo(params[:id])
   pass if !@memo
   @page_title = 'show memo'
   erb :show
 end
 
 get '/memos/:id/edit' do
-  @memo = find_memo
+  @memo = find_memo(params[:id])
   pass if !@memo
   @page_title = 'Edit memo'
   erb :edit
@@ -69,7 +69,8 @@ end
 
 patch '/memos/:id' do
   memos = fetch_memos
-  index = memos.index(find_memo)
+  memo = find_memo(params[:id])
+  index = memos.index(memo)
   memos[index][:title] = params[:title]
   memos[index][:body] = params[:body]
   write_to_file(memos)
@@ -78,7 +79,8 @@ end
 
 delete '/memos/:id' do
   memos = fetch_memos
-  index = memos.index(find_memo)
+  memo = find_memo(params[:id])
+  index = memos.index(memo)
   memos.delete_at(index)
   write_to_file(memos)
   redirect '/memos'
