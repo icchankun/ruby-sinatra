@@ -29,7 +29,7 @@ helpers do
 end
 
 not_found do
-  'This is nowhere to be found.'
+  'このURLのページは存在しません。'
 end
 
 get '/memos' do
