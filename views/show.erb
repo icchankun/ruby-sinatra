@@ -1,0 +1,25 @@
+<div class="heading">
+  <div class="heading-text">メモアプリ</div>
+</div>
+<div class="content">
+  <div class="memo-title">
+    <%== @memo[:title] %>
+  </div>
+  <div class="memo-body">
+    <%== @memo[:body] %>
+  </div>
+</div>
+<div class="links">
+  <div class="link">
+    <a class="btn" href="/memos/<%= params[:id] %>/edit">変更</a>
+  </div>
+  <div class="link">
+    <form method="post" action="/memos/<%= params[:id] %>">
+      <input type="hidden" name="_method" value="DELETE">
+      <input class="btn input-btn" type="submit" value="削除">
+    </form>
+  </div>
+  <div class="link">
+    <a class="btn" href="/memos">戻る</a>
+  </div>
+</div>
