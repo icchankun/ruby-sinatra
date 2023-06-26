@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 gem 'debug', '>= 1.0.0'
 gem 'erb_lint', require: false
+gem 'pg'
 gem 'rubocop', require: false
 gem 'rubocop-fjord', require: false
 gem 'sinatra'
