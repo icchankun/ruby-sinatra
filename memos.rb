@@ -4,13 +4,14 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
 require 'securerandom'
+require 'pg'
 
 helpers do
   def fetch_memos
-    json_data = File.read('memos.json')
-    return [] if json_data.empty?
+    connection = PG.connect(dbname: 'ruby_sinatra')
+    result = connection.exec('SELECT * FROM memos')
 
-    JSON.parse(json_data, symbolize_names: true)[:memos]
+    result.to_a.map { |hash| hash.transform_keys(&:to_sym) }
   end
 
   def find_memo(id)
