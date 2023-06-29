@@ -7,10 +7,12 @@ require 'securerandom'
 require 'pg'
 
 helpers do
-  def fetch_memos
-    connection = PG.connect(dbname: 'ruby_sinatra')
-    result = connection.exec('SELECT * FROM memos')
+  def connection
+    PG.connect(dbname: 'ruby_sinatra')
+  end
 
+  def fetch_memos
+    result = connection.exec('SELECT * FROM memos')
     result.to_a.map { |hash| hash.transform_keys(&:to_sym) }
   end
 
@@ -48,16 +50,8 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  memos = fetch_memos
-
-  title = params[:title]
-  body = params[:body]
-  memo = { id: SecureRandom.uuid, title:, body: }
-
-  memos << memo
-  write_to_file(memos)
-
-  redirect "/memos/#{memo[:id]}"
+  connection.exec_params('INSERT INTO memos (title, body) VALUES ($1, $2)', [params[:title], params[:body]])
+  redirect "/memos/#{fetch_memos.length}"
 end
 
 get '/memos/:id' do
