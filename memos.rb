@@ -18,6 +18,7 @@ helpers do
 
   def find_memo(id)
     memo = connection.exec_params('SELECT * FROM memos WHERE id = $1', [id])
+    pass if memo.to_a.empty?
     memo[0].transform_keys(&:to_sym)
   end
 
@@ -55,7 +56,6 @@ end
 
 get '/memos/:id' do
   @memo = find_memo(params[:id])
-  pass if !@memo
 
   @page_title = 'show memo'
 
@@ -64,7 +64,6 @@ end
 
 get '/memos/:id/edit' do
   @memo = find_memo(params[:id])
-  pass if !@memo
 
   @page_title = 'Edit memo'
 
