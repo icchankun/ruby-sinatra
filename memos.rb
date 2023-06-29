@@ -74,15 +74,7 @@ get '/memos/:id/edit' do
 end
 
 patch '/memos/:id' do
-  memos = fetch_memos
-
-  memo = find_memo(params[:id])
-
-  index = memos.index(memo)
-  memos[index][:title] = params[:title]
-  memos[index][:body] = params[:body]
-  write_to_file(memos)
-
+  connection.exec_params('UPDATE memos SET title = $1, body = $2 WHERE id = $3', [params[:title], params[:body], params[:id]])
   redirect "/memos/#{params[:id]}"
 end
 
