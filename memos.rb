@@ -12,8 +12,8 @@ helpers do
   end
 
   def fetch_memos
-    result = connection.exec('SELECT * FROM memos')
-    result.to_a.map { |hash| hash.transform_keys(&:to_sym) }
+    memos = connection.exec('SELECT * FROM memos')
+    memos.to_a.map { |memo| memo.transform_keys(&:to_sym) }
   end
 
   def find_memo(id)
