@@ -17,7 +17,8 @@ helpers do
   end
 
   def find_memo(id)
-    fetch_memos.find { |memo| memo[:id] == id }
+    memo = connection.exec_params('SELECT * FROM memos WHERE id = $1', [id])
+    memo[0].transform_keys(&:to_sym)
   end
 
   def write_to_file(memos)
