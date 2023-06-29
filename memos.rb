@@ -21,12 +21,6 @@ helpers do
     memo[0].transform_keys(&:to_sym)
   end
 
-  def write_to_file(memos)
-    File.open('memos.json', 'w') do |file|
-      JSON.dump({ memos: }, file)
-    end
-  end
-
   def title(page_title)
     "#{page_title} | メモアプリ"
   end
@@ -79,13 +73,6 @@ patch '/memos/:id' do
 end
 
 delete '/memos/:id' do
-  memos = fetch_memos
-
-  memo = find_memo(params[:id])
-
-  index = memos.index(memo)
-  memos.delete_at(index)
-  write_to_file(memos)
-
+  connection.exec_params('DELETE FROM memos WHERE id = $1', [params[:id]])
   redirect '/memos'
 end
