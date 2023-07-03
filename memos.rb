@@ -3,10 +3,20 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'pg'
+require 'singleton'
+
+class Database
+  include Singleton
+  attr_reader :connection
+
+  def initialize
+    @connection = PG.connect(dbname: 'ruby_sinatra')
+  end
+end
 
 helpers do
   def connection
-    PG.connect(dbname: 'ruby_sinatra')
+    Database.instance.connection
   end
 
   def fetch_memos
