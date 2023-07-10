@@ -30,8 +30,8 @@ helpers do
     memo[0].transform_keys(&:to_sym)
   end
 
-  def lastest_memo_id(memos)
-    memos[memos.length - 1][:id]
+  def created_memo_id(memos)
+    memos[-1][:id]
   end
 
   def title(page_title)
@@ -59,7 +59,7 @@ end
 
 post '/memos' do
   connection.exec_params('INSERT INTO memos (title, body) VALUES ($1, $2)', [params[:title], params[:body]])
-  redirect "/memos/#{lastest_memo_id(fetch_memos)}"
+  redirect "/memos/#{created_memo_id(fetch_memos)}"
 end
 
 get '/memos/:id' do
