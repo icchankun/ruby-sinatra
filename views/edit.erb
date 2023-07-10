@@ -4,8 +4,8 @@
 <div>
   <form class="form" method="post" action="/memos/<%= params[:id] %>">
     <input type="hidden" name="_method" value="PATCH">
-    <input class="memo-title-field" type="text" name="title" value="<%= @memo[:title] %>" required="required">
-    <textarea class="memo-body-field" name="body" required="required"><%= @memo[:body] %></textarea>
+    <input class="memo-title-field" type="text" name="title" value="<%== @memo[:title] %>" required="required">
+    <textarea class="memo-body-field" name="body" required="required"><%== @memo[:body] %></textarea>
     <input class="btn input-btn" type="submit" value="変更">
   </form>
 </div>
