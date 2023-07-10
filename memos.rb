@@ -2,25 +2,36 @@
 
 require 'sinatra'
 require 'sinatra/reloader'
-require 'json'
-require 'securerandom'
+require 'pg'
+require 'singleton'
+
+class Database
+  include Singleton
+  attr_reader :connection
+
+  def initialize
+    @connection = PG.connect(dbname: 'ruby_sinatra')
+  end
+end
 
 helpers do
-  def fetch_memos
-    json_data = File.read('memos.json')
-    return [] if json_data.empty?
+  def connection
+    Database.instance.connection
+  end
 
-    JSON.parse(json_data, symbolize_names: true)[:memos]
+  def fetch_memos
+    memos = connection.exec('SELECT * FROM memos')
+    memos.to_a.map { |memo| memo.transform_keys(&:to_sym) }
   end
 
   def find_memo(id)
-    fetch_memos.find { |memo| memo[:id] == id }
+    memo = connection.exec_params('SELECT * FROM memos WHERE id = $1', [id])
+    pass if memo.to_a.empty?
+    memo[0].transform_keys(&:to_sym)
   end
 
-  def write_to_file(memos)
-    File.open('memos.json', 'w') do |file|
-      JSON.dump({ memos: }, file)
-    end
+  def created_memo_id(memos)
+    memos[-1][:id]
   end
 
   def title(page_title)
@@ -47,21 +58,12 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  memos = fetch_memos
-
-  title = params[:title]
-  body = params[:body]
-  memo = { id: SecureRandom.uuid, title:, body: }
-
-  memos << memo
-  write_to_file(memos)
-
-  redirect "/memos/#{memo[:id]}"
+  connection.exec_params('INSERT INTO memos (title, body) VALUES ($1, $2)', [params[:title], params[:body]])
+  redirect "/memos/#{created_memo_id(fetch_memos)}"
 end
 
 get '/memos/:id' do
   @memo = find_memo(params[:id])
-  pass if !@memo
 
   @page_title = 'show memo'
 
@@ -70,7 +72,6 @@ end
 
 get '/memos/:id/edit' do
   @memo = find_memo(params[:id])
-  pass if !@memo
 
   @page_title = 'Edit memo'
 
@@ -78,26 +79,11 @@ get '/memos/:id/edit' do
 end
 
 patch '/memos/:id' do
-  memos = fetch_memos
-
-  memo = find_memo(params[:id])
-
-  index = memos.index(memo)
-  memos[index][:title] = params[:title]
-  memos[index][:body] = params[:body]
-  write_to_file(memos)
-
+  connection.exec_params('UPDATE memos SET title = $1, body = $2 WHERE id = $3', [params[:title], params[:body], params[:id]])
   redirect "/memos/#{params[:id]}"
 end
 
 delete '/memos/:id' do
-  memos = fetch_memos
-
-  memo = find_memo(params[:id])
-
-  index = memos.index(memo)
-  memos.delete_at(index)
-  write_to_file(memos)
-
+  connection.exec_params('DELETE FROM memos WHERE id = $1', [params[:id]])
   redirect '/memos'
 end

@@ -14,15 +14,45 @@ $ cd ruby-sinatra
 $ bundle install
 ```
 
-4. アプリケーションのデータの保存に必要なファイルを作成してください。
+4. 下のURLの記事（日本PostgreSQLユーザ会）を参考にし、最新版のPostgreSQLをインストール、起動してください。<br>
+https://www.postgresql.jp/download
+
+5. PostgreSQLにログインしてください。
 ```
-$ touch memos.json
+$ psql -U ${USER} -d postgres
 ```
 
-5. アプリケーションを起動させてください。
+6. ユーザー(sample)を作成してください。
 ```
-bundle exec ruby memos.rb
+postgres=# CREATE USER sample WITH SUPERUSER;
 ```
 
-6. 下記のURLにアクセスしてください。<br>
+8. データベース(ruby_sinatra)を作成してください。
+```
+postgres=# CREATE DATABASE ruby_sinatra OWNER sample;
+```
+
+7. PostgreSQLから一度ログアウトし、sampleでログインしなおしてください。その時、データベースはruby_sinatraを指定してください。
+```
+postgres=# \q
+$ psql -U sample -d ruby_sinatra
+```
+
+8. ruby_sinatraにテーブルを作成してください。
+```
+ruby_sinatra=# CREATE TABLE memos (
+id SERIAL PRIMARY KEY,
+title text NOT NULL,
+body text NOT NULL,
+created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+9. PostgreSQLからログアウトし、アプリケーションを起動させてください。
+```
+ruby_sinatra=# \q
+$ bundle exec ruby memos.rb
+```
+
+10. 下のURLにアクセスしてください。<br>
 http://localhost:4567/memos

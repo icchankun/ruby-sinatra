@@ -52,6 +52,7 @@ GEM
     parallel (1.23.0)
     parser (3.2.2.1)
       ast (~> 2.4.1)
+    pg (1.5.3)
     racc (1.6.2)
     rack (2.2.7)
     rack-protection (3.0.6)
@@ -111,6 +112,7 @@ PLATFORMS
 DEPENDENCIES
   debug (>= 1.0.0)
   erb_lint
+  pg
   rubocop
   rubocop-fjord
   sinatra
